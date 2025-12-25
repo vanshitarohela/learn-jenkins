@@ -51,7 +51,7 @@ pipeline {
         stage('Load Groovy file') {
             steps {
                 script {
-                    // checkout scm
+                    checkout scm
                     def groovy_file = load './script.groovy'
                     groovy_file.printTest()
                 }
