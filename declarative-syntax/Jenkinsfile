@@ -10,11 +10,11 @@ pipeline {
         VERSION_NAME = '2.0.9'
         // CREDENTIALS_GLOBAL = credentials('credentials_id') // ID cam be found in Jenkins UI
     }
-    tools {
+    // tools {
         // options are jdk, maven and gradle
         // name of the tool found in jenkins global tool config
         // maven 'Maven' // maven commands can be used now
-    }
+    // }
 
     stages {
         stage('Conditional State') {
