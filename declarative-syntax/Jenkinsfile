@@ -50,6 +50,7 @@ pipeline {
 
         stage('Load Groovy file') {
             steps {
+                dir('${WORKSPACE/declarative-syntax}')
                 script {
                     checkout scm
                     sleep 500
