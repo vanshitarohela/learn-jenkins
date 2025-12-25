@@ -1,54 +1,58 @@
 pipeline {
-    agent any {
-        parameters {
-            string(name: 'string_param', defaultValue: 'string_value', description: 'string param')
-            booleanParam(name: 'checkbox', defaultValue: 'false', description: 'true or false param')
-            choice(name: 'choice_box', choices: ['1', '2', '3'], description: 'true or false param')
-        }
-        environment {
-            // env-vars.html
-            VERSION_NAME = '2.0.9'
-            CREDENTIALS_GLOBAL = credentials('credentials_id') // ID cam be found in Jenkins UI
-        }
-        tools {
-            // options are jdk, maven and gradle
-            // name of the tool found in jenkins global tool config
-            maven 'Maven' // maven commands can be used now
-        }
+    agent any
+    parameters {
+        string(name: 'string_param', defaultValue: 'string_value', description: 'string param')
+        booleanParam(name: 'checkbox', defaultValue: 'false', description: 'true or false param')
+        choice(name: 'choice_box', choices: ['1', '2', '3'], description: 'true or false param')
+    }
+    environment {
+        // env-vars.html
+        VERSION_NAME = '2.0.9'
+        // CREDENTIALS_GLOBAL = credentials('credentials_id') // ID cam be found in Jenkins UI
+    }
+    tools {
+        // options are jdk, maven and gradle
+        // name of the tool found in jenkins global tool config
+        maven 'Maven' // maven commands can be used now
+    }
 
-        stages {
-            stage('Conditional State') {
-                // stage only runs when expression is true
-                when {
-                    expressions {
-                        BRANCH_NAME == 'master' // if statement 
-                    }
-                }
-                steps {
-                    script {
-                        // for groovy run
-                        print("Building version ${VERSION_NAME}")
-                    }
-                    // can use direct sh commands or echo
+    stages {
+        stage('Conditional State') {
+            // stage only runs when expression is true
+            when {
+                expressions {
+                    BRANCH_NAME == 'master' // if statement
                 }
             }
-
-            stage('Credentials') {
-                withCredentials([
-                    usernamePassword(credentials: 'credentials_id', usernameVariable: USER, usernamePassword: PWD)
-                ]) {
-                    // When credentials type is username with password
-                    // Plugins required = Credentials, Credentials Binding
-                    echo "Username is ${USER} and password is ${PWD}"
+            steps {
+                script {
+                    // for groovy run
+                    print("Building version ${VERSION_NAME}")
                 }
+            // can use direct sh commands or echo
             }
+        }
 
-            stage('Load Groovy file') {
-                steps {
-                    script {
-                        def groovy_file = load 'script.groovy'
-                        groovy_file.printTest()
-                    }
+        stage('Credentials') {
+            steps {
+                echo "${params.string_param}"
+                echo "${params.checkbox}"
+                echo "${params.choice_box}"
+            }
+            // withCredentials([
+            //     usernamePassword(credentials: 'credentials_id', usernameVariable: USER, usernamePassword: PWD)
+            // ]) {
+            //     // When credentials type is username with password
+            //     // Plugins required = Credentials, Credentials Binding
+            //     echo "Username is ${USER} and password is ${PWD}"
+            // }
+        }
+
+        stage('Load Groovy file') {
+            steps {
+                script {
+                    def groovy_file = load 'script.groovy'
+                    groovy_file.printTest()
                 }
             }
         }
@@ -56,13 +60,19 @@ pipeline {
 
     post {
         always {
-
+            steps {
+                echo "always"
+            }
         }
         success {
-
+            steps {
+                echo "success"
+            }
         }
         failure {
-            
+            steps {
+                echo "failure"
+            }
         }
     }
 }
