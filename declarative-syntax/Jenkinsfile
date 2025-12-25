@@ -13,14 +13,14 @@ pipeline {
     tools {
         // options are jdk, maven and gradle
         // name of the tool found in jenkins global tool config
-        maven 'Maven' // maven commands can be used now
+        // maven 'Maven' // maven commands can be used now
     }
 
     stages {
         stage('Conditional State') {
             // stage only runs when expression is true
             when {
-                expressions {
+                expression {
                     BRANCH_NAME == 'master' // if statement
                 }
             }
