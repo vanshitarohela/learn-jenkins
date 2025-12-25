@@ -51,7 +51,8 @@ pipeline {
         stage('Load Groovy file') {
             steps {
                 script {
-                    def groovy_file = load 'script.groovy'
+                    // checkout scm
+                    def groovy_file = load './script.groovy'
                     groovy_file.printTest()
                 }
             }
@@ -60,19 +61,13 @@ pipeline {
 
     post {
         always {
-            steps {
-                echo "always"
-            }
+            echo "always"
         }
         success {
-            steps {
-                echo "success"
-            }
+            echo "success"
         }
         failure {
-            steps {
-                echo "failure"
-            }
+            echo "failure"
         }
     }
 }
