@@ -50,14 +50,12 @@ pipeline {
 
         stage('Load Groovy file') {
             steps {
-                dir('${WORKSPACE/declarative-syntax}') {
-                    script {
-                        checkout scm
-                        sleep 500
-                        def groovy_file = load './script.groovy'
-                        groovy_file.printTest()
-                    }
-                }                
+                echo "${WORKSPACE}"
+                script {
+                    checkout scm
+                    def groovy_file = load "${WORKSPACE}/declarative-syntax/script.groovy"
+                    groovy_file.printTest()
+                }
             }
         }
     }
