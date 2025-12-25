@@ -52,6 +52,7 @@ pipeline {
             steps {
                 script {
                     checkout scm
+                    sleep 500
                     def groovy_file = load './script.groovy'
                     groovy_file.printTest()
                 }
