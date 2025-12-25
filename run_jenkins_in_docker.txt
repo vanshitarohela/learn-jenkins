@@ -1,0 +1,7 @@
+Run jenkins on docker - https://www.youtube.com/watch?v=pMO26j2OUME
+Docker volume - https://www.youtube.com/watch?v=p2PH_YPCsis 
+
+Pull jenkins image
+Create container - specify ports, create volume (to not lose data), use detached mode, give name
+
+docker run -p 8080:8080 -p 50000:50000 -d --restart=on-failure -v jenkins_home:/var/jenkins_home --name jenkins-learn jenkins/jenkins:jdk17

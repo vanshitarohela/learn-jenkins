@@ -1,8 +1,8 @@
 pipeline {
     agent any {
         parameters {
-            string(name: 'string_param', defaultValue: 'string_value', description: 'string param'),
-            booleanParam(name: 'checkbox', defaultValue: 'false', description: 'true or false param'),
+            string(name: 'string_param', defaultValue: 'string_value', description: 'string param')
+            booleanParam(name: 'checkbox', defaultValue: 'false', description: 'true or false param')
             choice(name: 'choice_box', choices: ['1', '2', '3'], description: 'true or false param')
         }
         environment {
