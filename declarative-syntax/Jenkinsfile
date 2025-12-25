@@ -19,11 +19,11 @@ pipeline {
     stages {
         stage('Conditional State') {
             // stage only runs when expression is true
-            when {
-                expression {
-                    BRANCH_NAME == 'master' // if statement
-                }
-            }
+            // when {
+            //     expression {
+            //         BRANCH_NAME == 'master' // if statement
+            //     }
+            // }
             steps {
                 script {
                     // for groovy run
