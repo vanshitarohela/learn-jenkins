@@ -19,14 +19,15 @@ pipeline {
     stages {
         stage('Conditional State') {
             // stage only runs when expression is true
-            // when {
-            //     expression {
-            //         BRANCH_NAME == 'master' // if statement
-            //     }
-            // }
+            when {
+                expression {
+                    params.string_param == 'string_value' // if statement
+                }
+            }
             steps {
                 script {
                     // for groovy run
+                    print("When expression is true")
                     print("Building version ${VERSION_NAME}")
                 }
             // can use direct sh commands or echo
@@ -52,7 +53,6 @@ pipeline {
             steps {
                 echo "${WORKSPACE}"
                 script {
-                    checkout scm
                     def groovy_file = load "${WORKSPACE}/declarative-syntax/script.groovy"
                     groovy_file.printTest()
                 }
@@ -63,6 +63,8 @@ pipeline {
     post {
         always {
             echo "always"
+            echo "Cleaning workspace after"
+            cleanWs()
         }
         success {
             echo "success"
